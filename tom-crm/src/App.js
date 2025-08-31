@@ -14,6 +14,10 @@ import UomMaster from './components/UomMaster/UomMaster'
 import FinacialYearMaster from './components/FinacialMaster/FinacialYearMaster'
 import SubsidairyCompany from './components/SubsidairyCompany/SubsidairyCompany'
 import ProjectMaster from './components/ProjectMaster/ProjectMaster'
+import CostCenter from './components/CostCenter/CostCenter'
+import CustomerCreation from './components/CustomerCreation/CustomerCreation'
+import VendorCreation from './components/VendorCreation/VendorCreation'
+import ItemMasterData from './components/ItemMasterData/ItemMasterData'
 
 const SIDEBAR_WIDTH = 230;
 
@@ -44,9 +48,11 @@ const AppLayout = ({ sidebarOpen, handleMenuClick, handleSidebarClose }) => (
         <Route path="/master/financial-year" element={<FinacialYearMaster/>} />
         <Route path="/master/subsidiary-company" element={<SubsidairyCompany/>} />
         <Route path="/master/project-master" element={<ProjectMaster/>} />
+        <Route path="/master/cost-center" element={<CostCenter/>} />
         <Route path="/crm" element={<div>CRM Page</div>} />
-        <Route path="/customer-vendor" element={<div>Customer Vendor Page</div>} />
-        <Route path="/inventory" element={<div>Inventory Page</div>} />
+        <Route path="/customer-vendor/customer-creation" element={<CustomerCreation/>} />
+        <Route path="/customer-vendor/vendor-creation" element={<VendorCreation/>} />
+        <Route path="/inventory/item-master-data" element={<ItemMasterData/>}/>
         <Route path="/sales" element={<div>Sales Page</div>} />
         <Route path="/purchase" element={<div>Purchase Page</div>} />
         <Route path="/accounting" element={<div>Accounting Page</div>} />
