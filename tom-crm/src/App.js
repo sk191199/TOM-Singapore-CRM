@@ -20,6 +20,11 @@ import VendorCreation from './components/VendorCreation/VendorCreation'
 import ItemMasterData from './components/ItemMasterData/ItemMasterData'
 import SalesQuotation from './components/SalesQuotation/SalesQuotation'
 import SalesOrder from './components/SalesOrder/SalesOrder'
+import Delivery from './components/Delivery/Delivery'
+import ArInvoice from './components/ArInvoice/ArInvoice'
+import PurchaseOrder from './components/PurchaseOrder/PurchaseOrder'
+import ApInvoice from './components/ApInvoice/ApInvoice'
+import JournalEntries from './components/JournalEntries/JournalEntries'
 
 const SIDEBAR_WIDTH = 230;
 
@@ -57,8 +62,11 @@ const AppLayout = ({ sidebarOpen, handleMenuClick, handleSidebarClose }) => (
         <Route path="/inventory/item-master-data" element={<ItemMasterData/>}/>
         <Route path="/sales/quotation" element={<SalesQuotation/>} />
         <Route path="/sales/order" element={<SalesOrder/>} />
-        <Route path="/purchase" element={<div>Purchase Page</div>} />
-        <Route path="/accounting" element={<div>Accounting Page</div>} />
+        <Route path="/sales/delivery" element={<Delivery/>} />
+        <Route path="/sales/ar-invoice" element={<ArInvoice/>} />
+        <Route path="/purchase/order" element={<PurchaseOrder/>} />
+        <Route path="/purchase/ap-invoice" element={<ApInvoice/>} />
+        <Route path="/accounting/journal-entries" element={<JournalEntries/>} />
         <Route path="/" element={<div>Home Page</div>} />
       </Routes>
     </div>

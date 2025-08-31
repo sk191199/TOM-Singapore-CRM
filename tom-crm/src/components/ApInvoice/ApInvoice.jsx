@@ -10,61 +10,48 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  IconButton,
   Select,
   MenuItem,
   FormControl,
   InputLabel,
   Checkbox,
+  FormControlLabel,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Cancel";
-import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
 import InfoIcon from "@mui/icons-material/Info";
 import PersonIcon from "@mui/icons-material/Person";
 import ArticleIcon from "@mui/icons-material/Article";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import DescriptionIcon from "@mui/icons-material/Description";
 
-const staticOrders = [
+const staticInvoices = [
   {
     docEntry: 1,
-    docNum: "SO00022025",
-    docDate: "2025-08-04",
-    customerCode: "C001",
-    customerName: "Tech Vision Pte Ltd",
-  },
-  {
-    docEntry: 2,
-    docNum: "SO00052025",
-    docDate: "2025-08-05",
-    customerCode: "C002",
-    customerName: "Green Solutions LLP",
-  },
-  {
-    docEntry: 3,
-    docNum: "SO00202025",
-    docDate: "2025-08-11",
-    customerCode: "C002",
-    customerName: "Green Solutions LLP",
+    docNum: "INV00312025",
+    docDate: "2025-08-27",
+    vendorCode: "V001",
+    vendorName: "Supply Hub Pte Ltd",
   },
 ];
 
 const docTypes = ["Open", "Closed"];
-const orderTypes = ["Item", "Service"];
-const customers = [
-  { code: "C001", name: "Tech Vision Pte Ltd" },
-  { code: "C002", name: "Green Solutions LLP" },
+const invoiceTypes = ["Item", "Service"];
+const vendors = [
+  { code: "V001", name: "Supply Hub Pte Ltd" },
+  { code: "V002", name: "Global Parts LLP" },
 ];
-const projects = ["Jurong One Smart City", "Marina Bay FinTech Park"];
 const subsidiaries = ["--Select--", "Tech Offshore Marine (s) Pte Ltd"];
+const departments = ["--Select--", "Procurement", "Operations"];
+const classes = ["--Select--", "Class A", "Class B"];
+const locations = ["--Select--", "Singapore", "Malaysia"];
 const currencies = ["SGD", "USD", "EUR"];
 const uoms = ["Piece", "Box", "Kg"];
 const taxCodes = ["GST", "VAT"];
-const salesEmployees = ["Akshat Saxena", "John Doe"];
+const purchaseEmployees = ["Akshat Saxena", "John Doe"];
 
-const SalesOrder = () => {
+const ApInvoice = () => {
   const [showForm, setShowForm] = useState(false);
   const [itemRows, setItemRows] = useState([
     {
@@ -73,7 +60,6 @@ const SalesOrder = () => {
       qty: 0,
       rate: 0,
       uom: "",
-      hsn: "",
       taxCode: "",
       discountPct: 0,
       priceAfterDiscount: 0,
@@ -90,7 +76,6 @@ const SalesOrder = () => {
         qty: 0,
         rate: 0,
         uom: "",
-        hsn: "",
         taxCode: "",
         discountPct: 0,
         priceAfterDiscount: 0,
@@ -104,11 +89,16 @@ const SalesOrder = () => {
       {!showForm ? (
         <Paper sx={{ p: 3 }}>
           <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-            <ShoppingCartIcon sx={{ fontSize: 36, color: "#1976d2", mr: 1 }} />
+            <DescriptionIcon sx={{ fontSize: 36, color: "#1976d2", mr: 1 }} />
             <Typography variant="h5" fontWeight={700}>
-              Sales Order Preparation List
+              AP Invoice Preparation List
             </Typography>
             <Box sx={{ flexGrow: 1 }} />
+            <FormControlLabel
+              control={<Checkbox />}
+              label="Select All"
+              sx={{ mr: 2 }}
+            />
             <Button
               variant="contained"
               color="error"
@@ -124,26 +114,23 @@ const SalesOrder = () => {
               sx={{ bgcolor: "#1976d2", fontWeight: 600 }}
               onClick={() => setShowForm(true)}
             >
-              New
+              + New Invoice
             </Button>
           </Box>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>
-                  <Checkbox />
-                  All
-                </TableCell>
+                <TableCell></TableCell>
                 <TableCell>DocEntry</TableCell>
                 <TableCell>DocNum</TableCell>
                 <TableCell>DocDate</TableCell>
-                <TableCell>Customer Code</TableCell>
-                <TableCell>Customer Name</TableCell>
+                <TableCell>Vendor Code</TableCell>
+                <TableCell>Vendor Name</TableCell>
                 <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {staticOrders.map((row, idx) => (
+              {staticInvoices.map((row, idx) => (
                 <TableRow key={idx}>
                   <TableCell>
                     <Checkbox />
@@ -151,8 +138,8 @@ const SalesOrder = () => {
                   <TableCell>{row.docEntry}</TableCell>
                   <TableCell>{row.docNum}</TableCell>
                   <TableCell>{row.docDate}</TableCell>
-                  <TableCell>{row.customerCode}</TableCell>
-                  <TableCell>{row.customerName}</TableCell>
+                  <TableCell>{row.vendorCode}</TableCell>
+                  <TableCell>{row.vendorName}</TableCell>
                   <TableCell>
                     <Button
                       variant="contained"
@@ -171,9 +158,9 @@ const SalesOrder = () => {
       ) : (
         <Paper sx={{ p: 3 }}>
           <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-            <ShoppingCartIcon sx={{ fontSize: 36, color: "#1976d2", mr: 1 }} />
+            <DescriptionIcon sx={{ fontSize: 36, color: "#1976d2", mr: 1 }} />
             <Typography variant="h5" fontWeight={700}>
-              Sales Order Preparation
+              AP Invoice Preparation
             </Typography>
             <Box sx={{ flexGrow: 1 }} />
             <Button
@@ -192,13 +179,6 @@ const SalesOrder = () => {
               Save Draft
             </Button>
             <Button
-              variant="outlined"
-              startIcon={<SwapHorizIcon />}
-              sx={{ fontWeight: 600, mr: 1 }}
-            >
-              Convert to Delivery
-            </Button>
-            <Button
               variant="contained"
               color="error"
               sx={{ bgcolor: "#f44336", fontWeight: 600 }}
@@ -206,33 +186,33 @@ const SalesOrder = () => {
               Submit
             </Button>
           </Box>
-          {/* Customer Information */}
+          {/* Vendor Information */}
           <Box sx={{ mb: 2 }}>
             <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
               <PersonIcon sx={{ color: "#1976d2", mr: 1 }} />
               <Typography variant="h6" fontWeight={700}>
-                Customer Information
+                Vendor Information
               </Typography>
             </Box>
             <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
               <FormControl sx={{ flex: "1 1 250px" }} size="small">
-                <InputLabel>Customer Code *</InputLabel>
-                <Select label="Customer Code *" defaultValue="">
+                <InputLabel>Vendor Code *</InputLabel>
+                <Select label="Vendor Code *" defaultValue="">
                   <MenuItem value="">--Select--</MenuItem>
-                  {customers.map((c) => (
-                    <MenuItem key={c.code} value={c.code}>
-                      {c.code}
+                  {vendors.map((v) => (
+                    <MenuItem key={v.code} value={v.code}>
+                      {v.code}
                     </MenuItem>
                   ))}
                 </Select>
               </FormControl>
               <FormControl sx={{ flex: "1 1 250px" }} size="small">
-                <InputLabel>Customer Name *</InputLabel>
-                <Select label="Customer Name *" defaultValue="">
+                <InputLabel>Vendor Name *</InputLabel>
+                <Select label="Vendor Name *" defaultValue="">
                   <MenuItem value="">--Select--</MenuItem>
-                  {customers.map((c) => (
-                    <MenuItem key={c.name} value={c.name}>
-                      {c.name}
+                  {vendors.map((v) => (
+                    <MenuItem key={v.name} value={v.name}>
+                      {v.name}
                     </MenuItem>
                   ))}
                 </Select>
@@ -244,28 +224,28 @@ const SalesOrder = () => {
               />
             </Box>
           </Box>
-          {/* Order Details */}
+          {/* Invoice Details */}
           <Box sx={{ mb: 2 }}>
             <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
               <ArticleIcon sx={{ color: "#1976d2", mr: 1 }} />
               <Typography variant="h6" fontWeight={700}>
-                Order Details
+                Invoice Details
               </Typography>
             </Box>
             <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
               <TextField
-                label="Posting Date *"
+                label="Invoice Number"
+                size="small"
+                value="INV00312025"
+                sx={{ flex: "1 1 200px" }}
+              />
+              <TextField
+                label="Posting Date"
                 size="small"
                 type="date"
                 InputLabelProps={{ shrink: true }}
                 sx={{ flex: "1 1 200px" }}
                 value="2025-08-27"
-              />
-              <TextField
-                label="Document Number"
-                size="small"
-                value="SO003122025"
-                sx={{ flex: "1 1 200px" }}
               />
               <TextField
                 label="Document Due Date"
@@ -276,8 +256,8 @@ const SalesOrder = () => {
                 value="2025-08-27"
               />
               <FormControl sx={{ flex: "1 1 200px" }} size="small">
-                <InputLabel>Doc Type</InputLabel>
-                <Select label="Doc Type" defaultValue="Open">
+                <InputLabel>Document Type</InputLabel>
+                <Select label="Document Type" defaultValue="Open">
                   {docTypes.map((type) => (
                     <MenuItem key={type} value={type}>
                       {type}
@@ -286,9 +266,9 @@ const SalesOrder = () => {
                 </Select>
               </FormControl>
               <FormControl sx={{ flex: "1 1 200px" }} size="small">
-                <InputLabel>Order Type</InputLabel>
-                <Select label="Order Type" defaultValue="Item">
-                  {orderTypes.map((type) => (
+                <InputLabel>Invoice Type</InputLabel>
+                <Select label="Invoice Type" defaultValue="Item">
+                  {invoiceTypes.map((type) => (
                     <MenuItem key={type} value={type}>
                       {type}
                     </MenuItem>
@@ -298,13 +278,13 @@ const SalesOrder = () => {
             </Box>
             <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
               <TextField
-                label="Place of Supply"
+                label="Location"
                 size="small"
                 sx={{ flex: "1 1 200px" }}
               />
               <FormControl sx={{ flex: "1 1 200px" }} size="small">
-                <InputLabel>Subsidiary *</InputLabel>
-                <Select label="Subsidiary *" defaultValue="">
+                <InputLabel>Subsidiary</InputLabel>
+                <Select label="Subsidiary" defaultValue="">
                   {subsidiaries.map((s) => (
                     <MenuItem key={s} value={s}>
                       {s}
@@ -313,12 +293,21 @@ const SalesOrder = () => {
                 </Select>
               </FormControl>
               <FormControl sx={{ flex: "1 1 200px" }} size="small">
-                <InputLabel>Project *</InputLabel>
-                <Select label="Project *" defaultValue="">
-                  <MenuItem value="">--Select--</MenuItem>
-                  {projects.map((p) => (
-                    <MenuItem key={p} value={p}>
-                      {p}
+                <InputLabel>Department</InputLabel>
+                <Select label="Department" defaultValue="">
+                  {departments.map((d) => (
+                    <MenuItem key={d} value={d}>
+                      {d}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <FormControl sx={{ flex: "1 1 200px" }} size="small">
+                <InputLabel>Class</InputLabel>
+                <Select label="Class" defaultValue="">
+                  {classes.map((c) => (
+                    <MenuItem key={c} value={c}>
+                      {c}
                     </MenuItem>
                   ))}
                 </Select>
@@ -359,7 +348,6 @@ const SalesOrder = () => {
                   <TableCell>Quantity</TableCell>
                   <TableCell>Rate</TableCell>
                   <TableCell>UOM</TableCell>
-                  <TableCell>HSN Code</TableCell>
                   <TableCell>Tax Code</TableCell>
                   <TableCell>Discount %</TableCell>
                   <TableCell>Price After Discount</TableCell>
@@ -399,9 +387,6 @@ const SalesOrder = () => {
                           ))}
                         </Select>
                       </FormControl>
-                    </TableCell>
-                    <TableCell>
-                      <TextField size="small" />
                     </TableCell>
                     <TableCell>
                       <FormControl size="small" sx={{ minWidth: 80 }}>
@@ -444,9 +429,9 @@ const SalesOrder = () => {
               <InputLabel>Bill To</InputLabel>
               <Select label="Bill To" defaultValue="">
                 <MenuItem value="">--Select--</MenuItem>
-                {customers.map((c) => (
-                  <MenuItem key={c.name} value={c.name}>
-                    {c.name}
+                {vendors.map((v) => (
+                  <MenuItem key={v.name} value={v.name}>
+                    {v.name}
                   </MenuItem>
                 ))}
               </Select>
@@ -464,9 +449,9 @@ const SalesOrder = () => {
               <InputLabel>Ship To</InputLabel>
               <Select label="Ship To" defaultValue="">
                 <MenuItem value="">--Select--</MenuItem>
-                {customers.map((c) => (
-                  <MenuItem key={c.name} value={c.name}>
-                    {c.name}
+                {vendors.map((v) => (
+                  <MenuItem key={v.name} value={v.name}>
+                    {v.name}
                   </MenuItem>
                 ))}
               </Select>
@@ -479,11 +464,47 @@ const SalesOrder = () => {
               sx={{ flex: "2 1 400px" }}
             />
           </Box>
+          {/* Extra Invoice Details */}
+          <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
+            <Box sx={{ flex: "1 1 250px" }}>
+              <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                <InfoIcon sx={{ color: "#1976d2", mr: 1 }} />
+                <Typography variant="h6" fontWeight={700}>
+                  Extra Invoice Details
+                </Typography>
+              </Box>
+              <TextField label="E-Way Bill No" size="small" fullWidth sx={{ mb: 1 }} />
+              <Button variant="contained" color="info" sx={{ fontWeight: 600, mb: 2 }}>
+                Generate E-Way Bill
+              </Button>
+            </Box>
+            <Box sx={{ flex: "1 1 250px" }}>
+              <TextField label="IRN No" size="small" fullWidth sx={{ mb: 1 }} />
+              <Button variant="contained" color="info" sx={{ fontWeight: 600, mb: 2 }}>
+                Generate IRN
+              </Button>
+            </Box>
+            <Box sx={{ flex: "1 1 250px" }}>
+              <Box
+                sx={{
+                  border: "1px solid #cfd8dc",
+                  borderRadius: 2,
+                  width: 120,
+                  height: 120,
+                  mb: 1,
+                  bgcolor: "#fff",
+                }}
+              />
+              <Button variant="contained" color="info" sx={{ fontWeight: 600 }}>
+                Generate QR
+              </Button>
+            </Box>
+          </Box>
           <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
             <FormControl sx={{ flex: "1 1 250px" }} size="small">
-              <InputLabel>Sales Employee</InputLabel>
-              <Select label="Sales Employee" defaultValue={salesEmployees[0]}>
-                {salesEmployees.map((emp) => (
+              <InputLabel>Purchase Employee</InputLabel>
+              <Select label="Purchase Employee" defaultValue={purchaseEmployees[0]}>
+                {purchaseEmployees.map((emp) => (
                   <MenuItem key={emp} value={emp}>
                     {emp}
                   </MenuItem>
@@ -545,4 +566,4 @@ const SalesOrder = () => {
   );
 };
 
-export default SalesOrder;
+export default ApInvoice;

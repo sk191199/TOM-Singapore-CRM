@@ -10,41 +10,40 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  IconButton,
   Select,
   MenuItem,
   FormControl,
   InputLabel,
   Checkbox,
+  FormControlLabel,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Cancel";
-import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
 import InfoIcon from "@mui/icons-material/Info";
 import PersonIcon from "@mui/icons-material/Person";
 import ArticleIcon from "@mui/icons-material/Article";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import DescriptionIcon from "@mui/icons-material/Description";
 
-const staticOrders = [
+const staticInvoices = [
   {
     docEntry: 1,
-    docNum: "SO00022025",
+    docNum: "INV00122025",
     docDate: "2025-08-04",
     customerCode: "C001",
     customerName: "Tech Vision Pte Ltd",
   },
   {
     docEntry: 2,
-    docNum: "SO00052025",
+    docNum: "INV00142025",
     docDate: "2025-08-05",
     customerCode: "C002",
     customerName: "Green Solutions LLP",
   },
   {
     docEntry: 3,
-    docNum: "SO00202025",
+    docNum: "INV00182025",
     docDate: "2025-08-11",
     customerCode: "C002",
     customerName: "Green Solutions LLP",
@@ -52,7 +51,7 @@ const staticOrders = [
 ];
 
 const docTypes = ["Open", "Closed"];
-const orderTypes = ["Item", "Service"];
+const invoiceTypes = ["Item", "Service"];
 const customers = [
   { code: "C001", name: "Tech Vision Pte Ltd" },
   { code: "C002", name: "Green Solutions LLP" },
@@ -64,7 +63,7 @@ const uoms = ["Piece", "Box", "Kg"];
 const taxCodes = ["GST", "VAT"];
 const salesEmployees = ["Akshat Saxena", "John Doe"];
 
-const SalesOrder = () => {
+const ArInvoice = () => {
   const [showForm, setShowForm] = useState(false);
   const [itemRows, setItemRows] = useState([
     {
@@ -104,11 +103,16 @@ const SalesOrder = () => {
       {!showForm ? (
         <Paper sx={{ p: 3 }}>
           <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-            <ShoppingCartIcon sx={{ fontSize: 36, color: "#1976d2", mr: 1 }} />
+            <DescriptionIcon sx={{ fontSize: 36, color: "#1976d2", mr: 1 }} />
             <Typography variant="h5" fontWeight={700}>
-              Sales Order Preparation List
+              AR Invoice Preparation List
             </Typography>
             <Box sx={{ flexGrow: 1 }} />
+            <FormControlLabel
+              control={<Checkbox />}
+              label="Select All"
+              sx={{ mr: 2 }}
+            />
             <Button
               variant="contained"
               color="error"
@@ -124,16 +128,13 @@ const SalesOrder = () => {
               sx={{ bgcolor: "#1976d2", fontWeight: 600 }}
               onClick={() => setShowForm(true)}
             >
-              New
+              + New
             </Button>
           </Box>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>
-                  <Checkbox />
-                  All
-                </TableCell>
+                <TableCell></TableCell>
                 <TableCell>DocEntry</TableCell>
                 <TableCell>DocNum</TableCell>
                 <TableCell>DocDate</TableCell>
@@ -143,7 +144,7 @@ const SalesOrder = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {staticOrders.map((row, idx) => (
+              {staticInvoices.map((row, idx) => (
                 <TableRow key={idx}>
                   <TableCell>
                     <Checkbox />
@@ -171,9 +172,9 @@ const SalesOrder = () => {
       ) : (
         <Paper sx={{ p: 3 }}>
           <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-            <ShoppingCartIcon sx={{ fontSize: 36, color: "#1976d2", mr: 1 }} />
+            <DescriptionIcon sx={{ fontSize: 36, color: "#1976d2", mr: 1 }} />
             <Typography variant="h5" fontWeight={700}>
-              Sales Order Preparation
+              AR Invoice Preparation
             </Typography>
             <Box sx={{ flexGrow: 1 }} />
             <Button
@@ -190,13 +191,6 @@ const SalesOrder = () => {
               sx={{ fontWeight: 600, mr: 1 }}
             >
               Save Draft
-            </Button>
-            <Button
-              variant="outlined"
-              startIcon={<SwapHorizIcon />}
-              sx={{ fontWeight: 600, mr: 1 }}
-            >
-              Convert to Delivery
             </Button>
             <Button
               variant="contained"
@@ -244,12 +238,12 @@ const SalesOrder = () => {
               />
             </Box>
           </Box>
-          {/* Order Details */}
+          {/* Invoice Details */}
           <Box sx={{ mb: 2 }}>
             <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
               <ArticleIcon sx={{ color: "#1976d2", mr: 1 }} />
               <Typography variant="h6" fontWeight={700}>
-                Order Details
+                Invoice Details
               </Typography>
             </Box>
             <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
@@ -262,9 +256,9 @@ const SalesOrder = () => {
                 value="2025-08-27"
               />
               <TextField
-                label="Document Number"
+                label="Invoice Number"
                 size="small"
-                value="SO003122025"
+                value="INV00302025"
                 sx={{ flex: "1 1 200px" }}
               />
               <TextField
@@ -286,9 +280,9 @@ const SalesOrder = () => {
                 </Select>
               </FormControl>
               <FormControl sx={{ flex: "1 1 200px" }} size="small">
-                <InputLabel>Order Type</InputLabel>
-                <Select label="Order Type" defaultValue="Item">
-                  {orderTypes.map((type) => (
+                <InputLabel>Invoice Type</InputLabel>
+                <Select label="Invoice Type" defaultValue="Item">
+                  {invoiceTypes.map((type) => (
                     <MenuItem key={type} value={type}>
                       {type}
                     </MenuItem>
@@ -479,6 +473,42 @@ const SalesOrder = () => {
               sx={{ flex: "2 1 400px" }}
             />
           </Box>
+          {/* Extra Invoice Details */}
+          <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
+            <Box sx={{ flex: "1 1 250px" }}>
+              <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                <InfoIcon sx={{ color: "#1976d2", mr: 1 }} />
+                <Typography variant="h6" fontWeight={700}>
+                  Extra Invoice Details
+                </Typography>
+              </Box>
+              <TextField label="E-Way Bill No" size="small" fullWidth sx={{ mb: 1 }} />
+              <Button variant="contained" color="info" sx={{ fontWeight: 600, mb: 2 }}>
+                Generate E-Way Bill
+              </Button>
+            </Box>
+            <Box sx={{ flex: "1 1 250px" }}>
+              <TextField label="IRN No" size="small" fullWidth sx={{ mb: 1 }} />
+              <Button variant="contained" color="info" sx={{ fontWeight: 600, mb: 2 }}>
+                Generate IRN
+              </Button>
+            </Box>
+            <Box sx={{ flex: "1 1 250px" }}>
+              <Box
+                sx={{
+                  border: "1px solid #cfd8dc",
+                  borderRadius: 2,
+                  width: 120,
+                  height: 120,
+                  mb: 1,
+                  bgcolor: "#fff",
+                }}
+              />
+              <Button variant="contained" color="info" sx={{ fontWeight: 600 }}>
+                Generate QR
+              </Button>
+            </Box>
+          </Box>
           <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
             <FormControl sx={{ flex: "1 1 250px" }} size="small">
               <InputLabel>Sales Employee</InputLabel>
@@ -545,4 +575,4 @@ const SalesOrder = () => {
   );
 };
 
-export default SalesOrder;
+export default ArInvoice;

@@ -23,9 +23,14 @@ import CorporateFareIcon from '@mui/icons-material/CorporateFare';
 import HubIcon from '@mui/icons-material/Hub';
 import ContactsIcon from "@mui/icons-material/Contacts";
 import BadgeIcon from "@mui/icons-material/Badge";
-import Inventory2Icon from "@mui/icons-material/Inventory2"; // Add this import
+import Inventory2Icon from "@mui/icons-material/Inventory2";
+import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
+import ScaleIcon from "@mui/icons-material/Scale";
+import ShowChartIcon from "@mui/icons-material/ShowChart";
 
-const SIDEBAR_WIDTH = 230;
+const SIDEBAR_WIDTH = 280;
 
 // Add your adminSubMenu here or import it if defined elsewhere
 const adminSubMenu = [
@@ -64,6 +69,21 @@ const salesSubMenu = [
   { text: "A/R Invoice", icon: <DescriptionIcon />, path: "/sales/ar-invoice" },
 ];
 
+const purchaseSubMenu = [
+  { text: "Purchase Request", icon: <AssignmentIcon />, path: "/purchase/request" },
+  { text: "Purchase Order", icon: <ReceiptLongIcon />, path: "/purchase/order" },
+  { text: "Goods Receipt PO", icon: <InventoryIcon />, path: "/purchase/goods-receipt" },
+  { text: "A/P Invoice", icon: <DescriptionIcon />, path: "/purchase/ap-invoice" },
+];
+
+const accountingSubMenu = [
+  { text: "Chart of Accounts", icon: <MenuBookIcon />, path: "/accounting/chart-of-accounts" },
+  { text: "Balance Sheet", icon: <ScaleIcon />, path: "/accounting/balance-sheet" },
+  { text: "Profit & Loss", icon: <ShowChartIcon />, path: "/accounting/profit-loss" },
+  { text: "Trial Balance", icon: <ScaleIcon />, path: "/accounting/trial-balance" },
+  { text: "Journal Entries", icon: <EditNoteIcon />, path: "/accounting/journal-entries" },
+];
+
 const menuItems = [
   {
     text: 'Administration',
@@ -95,8 +115,18 @@ const menuItems = [
     path: '/sales',
     submenu: salesSubMenu,
   },
-  { text: 'Purchase', icon: <LockIcon />, path: '/purchase' },
-  { text: 'Accounting', icon: <DescriptionIcon />, path: '/accounting' },
+  {
+    text: 'Purchase',
+    icon: <LockIcon />,
+    path: '/purchase',
+    submenu: purchaseSubMenu, // <-- Add this line
+  },
+  {
+    text: 'Accounting',
+    icon: <DescriptionIcon />,
+    path: '/accounting',
+    submenu: accountingSubMenu, // <-- Add this line
+  },
 ];
 
 const Sidebar = ({ open, onClose }) => {
@@ -106,12 +136,16 @@ const Sidebar = ({ open, onClose }) => {
   const [customerVendorOpen, setCustomerVendorOpen] = useState(false);
   const [inventoryOpen, setInventoryOpen] = useState(false); // <-- Add state for inventory
   const [salesOpen, setSalesOpen] = useState(false); // Add state for Sales dropdown
+  const [purchaseOpen, setPurchaseOpen] = useState(false); // Add state for Purchase dropdown
+  const [accountingOpen, setAccountingOpen] = useState(false); // Add state for Accounting dropdown
 
   const handleAdminClick = () => setAdminOpen((prev) => !prev);
   const handleMasterClick = () => setMasterOpen((prev) => !prev);
   const handleCustomerVendorClick = () => setCustomerVendorOpen((prev) => !prev);
   const handleInventoryClick = () => setInventoryOpen((prev) => !prev); // <-- Add handler for inventory
   const handleSalesClick = () => setSalesOpen((prev) => !prev); // Add handler for Sales dropdown
+  const handlePurchaseClick = () => setPurchaseOpen((prev) => !prev); // Add handler for Purchase dropdown
+  const handleAccountingClick = () => setAccountingOpen((prev) => !prev); // Add handler for Accounting dropdown
 
   return (
     <Drawer
@@ -127,517 +161,153 @@ const Sidebar = ({ open, onClose }) => {
           borderRight: '1px solid #232d3b',
           top: 0,
           height: '100vh',
-          maxHeight: '100vh',
-          overflowY: 'hidden',
+          display: 'flex',
+          flexDirection: 'column',
+          // Remove overflowY: 'scroll' here
         },
       }}
     >
-      <Box sx={{ textAlign: 'center', py: 2, borderBottom: '1px solid #38475a' }}>
+      <Box sx={{ textAlign: 'center', py: 2, borderBottom: '1px solid #38475a', flexShrink: 0 }}>
         <img
           src="https://www.tom.sg/wp-content/uploads/2021/11/tom_logo-300x135.png"
           alt="logo"
           style={{ maxWidth: '120px' }}
         />
       </Box>
-      <List sx={{ pt: 1 }}>
-        {/* Administration with dropdown */}
-        <ListItem
-          button
-          onClick={handleAdminClick}
-          selected={location.pathname.startsWith('/administration')}
-          sx={{
-            py: 1.2,
-            px: 3,
-            bgcolor: location.pathname.startsWith('/administration') ? '#38475a' : 'inherit',
-            fontWeight: 700,
-            color: '#fff',
-            fontSize: 17,
-            borderRadius: 1,
-            mb: 0.5,
-            '& .MuiListItemIcon-root': {
-              color: '#fff',
-              minWidth: 36,
-            },
-            '&:hover': {
-              bgcolor: '#38475a',
-            },
-            transition: 'background 0.2s',
-          }}
-        >
-          <ListItemIcon>{menuItems[0].icon}</ListItemIcon>
-          <ListItemText
-            primary={
-              <Typography
-                sx={{
-                  fontWeight: 700,
-                  color: '#fff',
-                  fontSize: 17,
-                }}
-              >
-                {menuItems[0].text}
-              </Typography>
-            }
-          />
-          {adminOpen ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
-        <Collapse in={adminOpen} timeout="auto" unmountOnExit>
-          <List
-            component="div"
-            disablePadding
-            sx={{
-              bgcolor: '#273447',
-              borderRadius: 1,
-              mx: 1,
-              mb: 1,
-              boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
-            }}
-          >
-            {adminSubMenu.map((item) => (
-              <ListItem
-                button
-                key={item.text}
-                component={Link}
-                to={item.path}
-                selected={location.pathname === item.path}
-                onClick={onClose}
-                sx={{
-                  pl: 6,
-                  py: 1,
-                  bgcolor: location.pathname === item.path ? '#38475a' : 'inherit',
-                  fontWeight: location.pathname === item.path ? 700 : 400,
-                  color: '#fff',
-                  fontSize: 15,
-                  borderRadius: 1,
-                  '& .MuiListItemIcon-root': {
-                    color: '#fff',
-                    minWidth: 36,
-                  },
-                  '&:hover': {
-                    bgcolor: '#38475a',
-                  },
-                  transition: 'background 0.2s',
-                }}
-              >
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText
-                  primary={
-                    <Typography
-                      sx={{
-                        fontWeight: location.pathname === item.path ? 700 : 400,
-                        color: '#fff',
-                        fontSize: 15,
-                      }}
-                    >
-                      {item.text}
-                    </Typography>
-                  }
-                />
-              </ListItem>
-            ))}
-          </List>
-        </Collapse>
-        {/* Master with dropdown */}
-        <ListItem
-          button
-          onClick={handleMasterClick}
-          selected={location.pathname.startsWith('/master')}
-          sx={{
-            py: 1.2,
-            px: 3,
-            bgcolor: location.pathname.startsWith('/master') ? '#38475a' : 'inherit',
-            fontWeight: 700,
-            color: '#fff',
-            fontSize: 17,
-            borderRadius: 1,
-            mb: 0.5,
-            '& .MuiListItemIcon-root': {
-              color: '#fff',
-              minWidth: 36,
-            },
-            '&:hover': {
-              bgcolor: '#38475a',
-            },
-            transition: 'background 0.2s',
-          }}
-        >
-          <ListItemIcon>{menuItems[1].icon}</ListItemIcon>
-          <ListItemText
-            primary={
-              <Typography
-                sx={{
-                  fontWeight: 700,
-                  color: '#fff',
-                  fontSize: 17,
-                }}
-              >
-                {menuItems[1].text}
-              </Typography>
-            }
-          />
-          {masterOpen ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
-        <Collapse in={masterOpen} timeout="auto" unmountOnExit>
-          <List
-            component="div"
-            disablePadding
-            sx={{
-              bgcolor: '#273447',
-              borderRadius: 1,
-              mx: 1,
-              mb: 1,
-              boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
-            }}
-          >
-            {masterSubMenu.map((item) => (
-              <ListItem
-                button
-                key={item.text}
-                component={Link}
-                to={item.path}
-                selected={location.pathname === item.path}
-                onClick={onClose}
-                sx={{
-                  pl: 6,
-                  py: 1,
-                  bgcolor: location.pathname === item.path ? '#38475a' : 'inherit',
-                  fontWeight: location.pathname === item.path ? 700 : 400,
-                  color: '#fff',
-                  fontSize: 15,
-                  borderRadius: 1,
-                  '& .MuiListItemIcon-root': {
-                    color: '#fff',
-                    minWidth: 36,
-                  },
-                  '&:hover': {
-                    bgcolor: '#38475a',
-                  },
-                  transition: 'background 0.2s',
-                }}
-              >
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText
-                  primary={
-                    <Typography
-                      sx={{
-                        fontWeight: location.pathname === item.path ? 700 : 400,
-                        color: '#fff',
-                        fontSize: 15,
-                      }}
-                    >
-                      {item.text}
-                    </Typography>
-                  }
-                />
-              </ListItem>
-            ))}
-          </List>
-        </Collapse>
-        {/* Customer Vendor with dropdown */}
-        <ListItem
-          button
-          onClick={handleCustomerVendorClick}
-          selected={location.pathname.startsWith('/customer-vendor')}
-          sx={{
-            py: 1.2,
-            px: 3,
-            bgcolor: location.pathname.startsWith('/customer-vendor') ? '#38475a' : 'inherit',
-            fontWeight: 700,
-            color: '#fff',
-            fontSize: 17,
-            borderRadius: 1,
-            mb: 0.5,
-            '& .MuiListItemIcon-root': {
-              color: '#fff',
-              minWidth: 36,
-            },
-            '&:hover': {
-              bgcolor: '#38475a',
-            },
-            transition: 'background 0.2s',
-          }}
-        >
-          <ListItemIcon>{menuItems[2].icon}</ListItemIcon>
-          <ListItemText
-            primary={
-              <Typography
-                sx={{
-                  fontWeight: 700,
-                  color: '#fff',
-                  fontSize: 17,
-                }}
-              >
-                {menuItems[2].text}
-              </Typography>
-            }
-          />
-          {customerVendorOpen ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
-        <Collapse in={customerVendorOpen} timeout="auto" unmountOnExit>
-          <List
-            component="div"
-            disablePadding
-            sx={{
-              bgcolor: '#273447',
-              borderRadius: 1,
-              mx: 1,
-              mb: 1,
-              boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
-            }}
-          >
-            {customerVendorSubMenu.map((item) => (
-              <ListItem
-                button
-                key={item.text}
-                component={Link}
-                to={item.path}
-                selected={location.pathname === item.path}
-                onClick={onClose}
-                sx={{
-                  pl: 6,
-                  py: 1,
-                  bgcolor: location.pathname === item.path ? '#38475a' : 'inherit',
-                  fontWeight: location.pathname === item.path ? 700 : 400,
-                  color: '#fff',
-                  fontSize: 15,
-                  borderRadius: 1,
-                  '& .MuiListItemIcon-root': {
-                    color: '#fff',
-                    minWidth: 36,
-                  },
-                  '&:hover': {
-                    bgcolor: '#38475a',
-                  },
-                  transition: 'background 0.2s',
-                }}
-              >
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText
-                  primary={
-                    <Typography
-                      sx={{
-                        fontWeight: location.pathname === item.path ? 700 : 400,
-                        color: '#fff',
-                        fontSize: 15,
-                      }}
-                    >
-                      {item.text}
-                    </Typography>
-                  }
-                />
-              </ListItem>
-            ))}
-          </List>
-        </Collapse>
-        {/* Inventory with dropdown */}
-        <ListItem
-          button
-          onClick={handleInventoryClick}
-          selected={location.pathname.startsWith('/inventory')}
-          sx={{
-            py: 1.2,
-            px: 3,
-            bgcolor: location.pathname.startsWith('/inventory') ? '#38475a' : 'inherit',
-            fontWeight: 700,
-            color: '#fff',
-            fontSize: 17,
-            borderRadius: 1,
-            mb: 0.5,
-            '& .MuiListItemIcon-root': {
-              color: '#fff',
-              minWidth: 36,
-            },
-            '&:hover': {
-              bgcolor: '#38475a',
-            },
-            transition: 'background 0.2s',
-          }}
-        >
-          <ListItemIcon>{menuItems[3].icon}</ListItemIcon>
-          <ListItemText
-            primary={
-              <Typography
-                sx={{
-                  fontWeight: 700,
-                  color: '#fff',
-                  fontSize: 17,
-                }}
-              >
-                {menuItems[3].text}
-              </Typography>
-            }
-          />
-          {inventoryOpen ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
-        <Collapse in={inventoryOpen} timeout="auto" unmountOnExit>
-          <List
-            component="div"
-            disablePadding
-            sx={{
-              bgcolor: '#273447',
-              borderRadius: 1,
-              mx: 1,
-              mb: 1,
-              boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
-            }}
-          >
-            {inventorySubMenu.map((item) => (
-              <ListItem
-                button
-                key={item.text}
-                component={Link}
-                to={item.path}
-                selected={location.pathname === item.path}
-                onClick={onClose}
-                sx={{
-                  pl: 6,
-                  py: 1,
-                  bgcolor: location.pathname === item.path ? '#38475a' : 'inherit',
-                  fontWeight: location.pathname === item.path ? 700 : 400,
-                  color: '#fff',
-                  fontSize: 15,
-                  borderRadius: 1,
-                  '& .MuiListItemIcon-root': {
-                    color: '#fff',
-                    minWidth: 36,
-                  },
-                  '&:hover': {
-                    bgcolor: '#38475a',
-                  },
-                  transition: 'background 0.2s',
-                }}
-              >
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText
-                  primary={
-                    <Typography
-                      sx={{
-                        fontWeight: location.pathname === item.path ? 700 : 400,
-                        color: '#fff',
-                        fontSize: 15,
-                      }}
-                    >
-                      {item.text}
-                    </Typography>
-                  }
-                />
-              </ListItem>
-            ))}
-          </List>
-        </Collapse>
-        {/* Sales with dropdown */}
-        <ListItem
-          button
-          onClick={handleSalesClick}
-          selected={location.pathname.startsWith('/sales')}
-          sx={{
-            py: 1.2,
-            px: 3,
-            bgcolor: location.pathname.startsWith('/sales') ? '#38475a' : 'inherit',
-            fontWeight: 700,
-            color: '#fff',
-            fontSize: 17,
-            borderRadius: 1,
-            mb: 0.5,
-            '& .MuiListItemIcon-root': {
-              color: '#fff',
-              minWidth: 36,
-            },
-            '&:hover': {
-              bgcolor: '#38475a',
-            },
-            transition: 'background 0.2s',
-          }}
-        >
-          <ListItemIcon>{menuItems[4].icon}</ListItemIcon>
-          <ListItemText
-            primary={
-              <Typography
-                sx={{
-                  fontWeight: 700,
-                  color: '#fff',
-                  fontSize: 17,
-                }}
-              >
-                {menuItems[4].text}
-              </Typography>
-            }
-          />
-          {salesOpen ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
-        <Collapse in={salesOpen} timeout="auto" unmountOnExit>
-          <List
-            component="div"
-            disablePadding
-            sx={{
-              bgcolor: '#273447',
-              borderRadius: 1,
-              mx: 1,
-              mb: 1,
-              boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
-            }}
-          >
-            {salesSubMenu.map((item) => (
-              <ListItem
-                button
-                key={item.text}
-                component={Link}
-                to={item.path}
-                selected={location.pathname === item.path}
-                onClick={onClose}
-                sx={{
-                  pl: 6,
-                  py: 1,
-                  bgcolor: location.pathname === item.path ? '#38475a' : 'inherit',
-                  fontWeight: location.pathname === item.path ? 700 : 400,
-                  color: '#fff',
-                  fontSize: 15,
-                  borderRadius: 1,
-                  '& .MuiListItemIcon-root': {
-                    color: '#fff',
-                    minWidth: 36,
-                  },
-                  '&:hover': {
-                    bgcolor: '#38475a',
-                  },
-                  transition: 'background 0.2s',
-                }}
-              >
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText
-                  primary={
-                    <Typography
-                      sx={{
-                        fontWeight: location.pathname === item.path ? 700 : 400,
-                        color: '#fff',
-                        fontSize: 15,
-                      }}
-                    >
-                      {item.text}
-                    </Typography>
-                  }
-                />
-              </ListItem>
-            ))}
-          </List>
-        </Collapse>
-        <Divider sx={{ bgcolor: '#38475a', my: 1 }} />
-        {/* Other menu items */}
-        {menuItems.slice(5).map((item) => (
+      <Box
+        sx={{
+          flex: 1,
+          overflowY: 'auto',
+          // Custom scrollbar styles
+          '&::-webkit-scrollbar': {
+            width: '8px',
+            background: '#232d3b',
+            borderRadius: '8px',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            background: '#38475a',
+            borderRadius: '8px',
+          },
+          '&::-webkit-scrollbar-thumb:hover': {
+            background: '#1976d2',
+          },
+          scrollbarWidth: 'thin',
+          scrollbarColor: '#38475a #232d3b',
+        }}
+      >
+        <List sx={{ pt: 1 }}>
+          {/* Administration with dropdown */}
           <ListItem
             button
-            key={item.text}
-            component={Link}
-            to={item.path}
-            selected={location.pathname === item.path}
-            onClick={onClose}
+            onClick={handleAdminClick}
+            selected={location.pathname.startsWith('/administration')}
             sx={{
               py: 1.2,
               px: 3,
-              bgcolor: location.pathname === item.path ? '#38475a' : 'inherit',
-              fontWeight: location.pathname === item.path ? 700 : 500,
+              bgcolor: location.pathname.startsWith('/administration') ? '#38475a' : 'inherit',
+              fontWeight: 700,
               color: '#fff',
-              fontSize: 16,
+              fontSize: 17,
               borderRadius: 1,
+              mb: 0.5,
+              '& .MuiListItemIcon-root': {
+                color: '#fff',
+                minWidth: 36,
+              },
+              '&:hover': {
+                bgcolor: '#38475a',
+              },
+              transition: 'background 0.2s',
+              
+            }}
+          >
+            <ListItemIcon>{menuItems[0].icon}</ListItemIcon>
+            <ListItemText
+              primary={
+                <Typography
+                  sx={{
+                    fontWeight: 700,
+                    color: '#fff',
+                    fontSize: 17,
+                    
+                  }}
+                >
+                  {menuItems[0].text}
+                </Typography>
+              }
+            />
+            {adminOpen ? <ExpandLess /> : <ExpandMore />}
+          </ListItem>
+          <Collapse in={adminOpen} timeout="auto" unmountOnExit>
+            <List
+              component="div"
+              disablePadding
+              sx={{
+                bgcolor: '#273447',
+                borderRadius: 1,
+                mx: 1,
+                mb: 1,
+                boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+              }}
+            >
+              {adminSubMenu.map((item) => (
+                <ListItem
+                  button
+                  key={item.text}
+                  component={Link}
+                  to={item.path}
+                  selected={location.pathname === item.path}
+                  onClick={onClose}
+                  sx={{
+                    pl: 6,
+                    py: 1,
+                    bgcolor: location.pathname === item.path ? '#38475a' : 'inherit',
+                    fontWeight: location.pathname === item.path ? 700 : 400,
+                    color: '#fff',
+                    fontSize: 15,
+                    borderRadius: 1,
+                    '& .MuiListItemIcon-root': {
+                      color: '#fff',
+                      minWidth: 36,
+                    },
+                    '&:hover': {
+                      bgcolor: '#38475a',
+                    },
+                    transition: 'background 0.2s',
+                  }}
+                >
+                  <ListItemIcon>{item.icon}</ListItemIcon>
+                  <ListItemText
+                    primary={
+                      <Typography
+                        sx={{
+                          fontWeight: location.pathname === item.path ? 700 : 400,
+                          color: '#fff',
+                          fontSize: 15,
+                        }}
+                      >
+                        {item.text}
+                      </Typography>
+                    }
+                  />
+                </ListItem>
+              ))}
+            </List>
+          </Collapse>
+          {/* Master with dropdown */}
+          <ListItem
+            button
+            onClick={handleMasterClick}
+            selected={location.pathname.startsWith('/master')}
+            sx={{
+              py: 1.2,
+              px: 3,
+              bgcolor: location.pathname.startsWith('/master') ? '#38475a' : 'inherit',
+              fontWeight: 700,
+              color: '#fff',
+              fontSize: 17,
+              borderRadius: 1,
+              mb: 0.5,
               '& .MuiListItemIcon-root': {
                 color: '#fff',
                 minWidth: 36,
@@ -648,23 +318,604 @@ const Sidebar = ({ open, onClose }) => {
               transition: 'background 0.2s',
             }}
           >
-            <ListItemIcon>{item.icon}</ListItemIcon>
+            <ListItemIcon>{menuItems[1].icon}</ListItemIcon>
             <ListItemText
               primary={
                 <Typography
                   sx={{
-                    fontWeight: location.pathname === item.path ? 700 : 500,
+                    fontWeight: 700,
                     color: '#fff',
-                    fontSize: 16,
+                    fontSize: 17,
                   }}
                 >
-                  {item.text}
+                  {menuItems[1].text}
                 </Typography>
               }
             />
+            {masterOpen ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
-        ))}
-      </List>
+          <Collapse in={masterOpen} timeout="auto" unmountOnExit>
+            <List
+              component="div"
+              disablePadding
+              sx={{
+                bgcolor: '#273447',
+                borderRadius: 1,
+                mx: 1,
+                mb: 1,
+                boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+              }}
+            >
+              {masterSubMenu.map((item) => (
+                <ListItem
+                  button
+                  key={item.text}
+                  component={Link}
+                  to={item.path}
+                  selected={location.pathname === item.path}
+                  onClick={onClose}
+                  sx={{
+                    pl: 6,
+                    py: 1,
+                    bgcolor: location.pathname === item.path ? '#38475a' : 'inherit',
+                    fontWeight: location.pathname === item.path ? 700 : 400,
+                    color: '#fff',
+                    fontSize: 15,
+                    borderRadius: 1,
+                    '& .MuiListItemIcon-root': {
+                      color: '#fff',
+                      minWidth: 36,
+                    },
+                    '&:hover': {
+                      bgcolor: '#38475a',
+                    },
+                    transition: 'background 0.2s',
+                  }}
+                >
+                  <ListItemIcon>{item.icon}</ListItemIcon>
+                  <ListItemText
+                    primary={
+                      <Typography
+                        sx={{
+                          fontWeight: location.pathname === item.path ? 700 : 400,
+                          color: '#fff',
+                          fontSize: 15,
+                        }}
+                      >
+                        {item.text}
+                      </Typography>
+                    }
+                  />
+                </ListItem>
+              ))}
+            </List>
+          </Collapse>
+          {/* Customer Vendor with dropdown */}
+          <ListItem
+            button
+            onClick={handleCustomerVendorClick}
+            selected={location.pathname.startsWith('/customer-vendor')}
+            sx={{
+              py: 1.2,
+              px: 3,
+              bgcolor: location.pathname.startsWith('/customer-vendor') ? '#38475a' : 'inherit',
+              fontWeight: 700,
+              color: '#fff',
+              fontSize: 17,
+              borderRadius: 1,
+              mb: 0.5,
+              '& .MuiListItemIcon-root': {
+                color: '#fff',
+                minWidth: 36,
+              },
+              '&:hover': {
+                bgcolor: '#38475a',
+              },
+              transition: 'background 0.2s',
+            }}
+          >
+            <ListItemIcon>{menuItems[2].icon}</ListItemIcon>
+            <ListItemText
+              primary={
+                <Typography
+                  sx={{
+                    fontWeight: 700,
+                    color: '#fff',
+                    fontSize: 17,
+                  }}
+                >
+                  {menuItems[2].text}
+                </Typography>
+              }
+            />
+            {customerVendorOpen ? <ExpandLess /> : <ExpandMore />}
+          </ListItem>
+          <Collapse in={customerVendorOpen} timeout="auto" unmountOnExit>
+            <List
+              component="div"
+              disablePadding
+              sx={{
+                bgcolor: '#273447',
+                borderRadius: 1,
+                mx: 1,
+                mb: 1,
+                boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+              }}
+            >
+              {customerVendorSubMenu.map((item) => (
+                <ListItem
+                  button
+                  key={item.text}
+                  component={Link}
+                  to={item.path}
+                  selected={location.pathname === item.path}
+                  onClick={onClose}
+                  sx={{
+                    pl: 6,
+                    py: 1,
+                    bgcolor: location.pathname === item.path ? '#38475a' : 'inherit',
+                    fontWeight: location.pathname === item.path ? 700 : 400,
+                    color: '#fff',
+                    fontSize: 15,
+                    borderRadius: 1,
+                    '& .MuiListItemIcon-root': {
+                      color: '#fff',
+                      minWidth: 36,
+                    },
+                    '&:hover': {
+                      bgcolor: '#38475a',
+                    },
+                    transition: 'background 0.2s',
+                  }}
+                >
+                  <ListItemIcon>{item.icon}</ListItemIcon>
+                  <ListItemText
+                    primary={
+                      <Typography
+                        sx={{
+                          fontWeight: location.pathname === item.path ? 700 : 400,
+                          color: '#fff',
+                          fontSize: 15,
+                        }}
+                      >
+                        {item.text}
+                      </Typography>
+                    }
+                  />
+                </ListItem>
+              ))}
+            </List>
+          </Collapse>
+          {/* Inventory with dropdown */}
+          <ListItem
+            button
+            onClick={handleInventoryClick}
+            selected={location.pathname.startsWith('/inventory')}
+            sx={{
+              py: 1.2,
+              px: 3,
+              bgcolor: location.pathname.startsWith('/inventory') ? '#38475a' : 'inherit',
+              fontWeight: 700,
+              color: '#fff',
+              fontSize: 17,
+              borderRadius: 1,
+              mb: 0.5,
+              '& .MuiListItemIcon-root': {
+                color: '#fff',
+                minWidth: 36,
+              },
+              '&:hover': {
+                bgcolor: '#38475a',
+              },
+              transition: 'background 0.2s',
+            }}
+          >
+            <ListItemIcon>{menuItems[3].icon}</ListItemIcon>
+            <ListItemText
+              primary={
+                <Typography
+                  sx={{
+                    fontWeight: 700,
+                    color: '#fff',
+                    fontSize: 17,
+                  }}
+                >
+                  {menuItems[3].text}
+                </Typography>
+              }
+            />
+            {inventoryOpen ? <ExpandLess /> : <ExpandMore />}
+          </ListItem>
+          <Collapse in={inventoryOpen} timeout="auto" unmountOnExit>
+            <List
+              component="div"
+              disablePadding
+              sx={{
+                bgcolor: '#273447',
+                borderRadius: 1,
+                mx: 1,
+                mb: 1,
+                boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+              }}
+            >
+              {inventorySubMenu.map((item) => (
+                <ListItem
+                  button
+                  key={item.text}
+                  component={Link}
+                  to={item.path}
+                  selected={location.pathname === item.path}
+                  onClick={onClose}
+                  sx={{
+                    pl: 6,
+                    py: 1,
+                    bgcolor: location.pathname === item.path ? '#38475a' : 'inherit',
+                    fontWeight: location.pathname === item.path ? 700 : 400,
+                    color: '#fff',
+                    fontSize: 15,
+                    borderRadius: 1,
+                    '& .MuiListItemIcon-root': {
+                      color: '#fff',
+                      minWidth: 36,
+                    },
+                    '&:hover': {
+                      bgcolor: '#38475a',
+                    },
+                    transition: 'background 0.2s',
+                  }}
+                >
+                  <ListItemIcon>{item.icon}</ListItemIcon>
+                  <ListItemText
+                    primary={
+                      <Typography
+                        sx={{
+                          fontWeight: location.pathname === item.path ? 700 : 400,
+                          color: '#fff',
+                          fontSize: 15,
+                        }}
+                      >
+                        {item.text}
+                      </Typography>
+                    }
+                  />
+                </ListItem>
+              ))}
+            </List>
+          </Collapse>
+          {/* Sales with dropdown */}
+          <ListItem
+            button
+            onClick={handleSalesClick}
+            selected={location.pathname.startsWith('/sales')}
+            sx={{
+              py: 1.2,
+              px: 3,
+              bgcolor: location.pathname.startsWith('/sales') ? '#38475a' : 'inherit',
+              fontWeight: 700,
+              color: '#fff',
+              fontSize: 17,
+              borderRadius: 1,
+              mb: 0.5,
+              '& .MuiListItemIcon-root': {
+                color: '#fff',
+                minWidth: 36,
+              },
+              '&:hover': {
+                bgcolor: '#38475a',
+              },
+              transition: 'background 0.2s',
+            }}
+          >
+            <ListItemIcon>{menuItems[4].icon}</ListItemIcon>
+            <ListItemText
+              primary={
+                <Typography
+                  sx={{
+                    fontWeight: 700,
+                    color: '#fff',
+                    fontSize: 17,
+                  }}
+                >
+                  {menuItems[4].text}
+                </Typography>
+              }
+            />
+            {salesOpen ? <ExpandLess /> : <ExpandMore />}
+          </ListItem>
+          <Collapse in={salesOpen} timeout="auto" unmountOnExit>
+            <List
+              component="div"
+              disablePadding
+              sx={{
+                bgcolor: '#273447',
+                borderRadius: 1,
+                mx: 1,
+                mb: 1,
+                boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+              }}
+            >
+              {salesSubMenu.map((item) => (
+                <ListItem
+                  button
+                  key={item.text}
+                  component={Link}
+                  to={item.path}
+                  selected={location.pathname === item.path}
+                  onClick={onClose}
+                  sx={{
+                    pl: 6,
+                    py: 1,
+                    bgcolor: location.pathname === item.path ? '#38475a' : 'inherit',
+                    fontWeight: location.pathname === item.path ? 700 : 400,
+                    color: '#fff',
+                    fontSize: 15,
+                    borderRadius: 1,
+                    '& .MuiListItemIcon-root': {
+                      color: '#fff',
+                      minWidth: 36,
+                    },
+                    '&:hover': {
+                      bgcolor: '#38475a',
+                    },
+                    transition: 'background 0.2s',
+                  }}
+                >
+                  <ListItemIcon>{item.icon}</ListItemIcon>
+                  <ListItemText
+                    primary={
+                      <Typography
+                        sx={{
+                          fontWeight: location.pathname === item.path ? 700 : 400,
+                          color: '#fff',
+                          fontSize: 15,
+                        }}
+                      >
+                        {item.text}
+                      </Typography>
+                    }
+                  />
+                </ListItem>
+              ))}
+            </List>
+          </Collapse>
+          {/* Purchase with dropdown */}
+          <ListItem
+            button
+            onClick={handlePurchaseClick}
+            selected={location.pathname.startsWith('/purchase')}
+            sx={{
+              py: 1.2,
+              px: 3,
+              bgcolor: location.pathname.startsWith('/purchase') ? '#38475a' : 'inherit',
+              fontWeight: 700,
+              color: '#fff',
+              fontSize: 17,
+              borderRadius: 1,
+              mb: 0.5,
+              '& .MuiListItemIcon-root': {
+                color: '#fff',
+                minWidth: 36,
+              },
+              '&:hover': {
+                bgcolor: '#38475a',
+              },
+              transition: 'background 0.2s',
+            }}
+          >
+            <ListItemIcon>{menuItems[5].icon}</ListItemIcon>
+            <ListItemText
+              primary={
+                <Typography
+                  sx={{
+                    fontWeight: 700,
+                    color: '#fff',
+                    fontSize: 17,
+                  }}
+                >
+                  {menuItems[5].text}
+                </Typography>
+              }
+            />
+            {purchaseOpen ? <ExpandLess /> : <ExpandMore />}
+          </ListItem>
+          <Collapse in={purchaseOpen} timeout="auto" unmountOnExit>
+            <List
+              component="div"
+              disablePadding
+              sx={{
+                bgcolor: '#273447',
+                borderRadius: 1,
+                mx: 1,
+                mb: 1,
+                boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+              }}
+            >
+              {purchaseSubMenu.map((item) => (
+                <ListItem
+                  button
+                  key={item.text}
+                  component={Link}
+                  to={item.path}
+                  selected={location.pathname === item.path}
+                  onClick={onClose}
+                  sx={{
+                    pl: 6,
+                    py: 1,
+                    bgcolor: location.pathname === item.path ? '#38475a' : 'inherit',
+                    fontWeight: location.pathname === item.path ? 700 : 400,
+                    color: '#fff',
+                    fontSize: 15,
+                    borderRadius: 1,
+                    '& .MuiListItemIcon-root': {
+                      color: '#fff',
+                      minWidth: 36,
+                    },
+                    '&:hover': {
+                      bgcolor: '#38475a',
+                    },
+                    transition: 'background 0.2s',
+                  }}
+                >
+                  <ListItemIcon>{item.icon}</ListItemIcon>
+                  <ListItemText
+                    primary={
+                      <Typography
+                        sx={{
+                          fontWeight: location.pathname === item.path ? 700 : 400,
+                          color: '#fff',
+                          fontSize: 15,
+                        }}
+                      >
+                        {item.text}
+                      </Typography>
+                    }
+                  />
+                </ListItem>
+              ))}
+            </List>
+          </Collapse>
+          {/* Accounting with dropdown */}
+          <ListItem
+            button
+            onClick={handleAccountingClick}
+            selected={location.pathname.startsWith('/accounting')}
+            sx={{
+              py: 1.2,
+              px: 3,
+              bgcolor: location.pathname.startsWith('/accounting') ? '#38475a' : 'inherit',
+              fontWeight: 700,
+              color: '#fff',
+              fontSize: 17,
+              borderRadius: 1,
+              mb: 0.5,
+              '& .MuiListItemIcon-root': {
+                color: '#fff',
+                minWidth: 36,
+              },
+              '&:hover': {
+                bgcolor: '#38475a',
+              },
+              transition: 'background 0.2s',
+            }}
+          >
+            <ListItemIcon>{menuItems[6].icon}</ListItemIcon>
+            <ListItemText
+              primary={
+                <Typography
+                  sx={{
+                    fontWeight: 700,
+                    color: '#fff',
+                    fontSize: 17,
+                  }}
+                >
+                  {menuItems[6].text}
+                </Typography>
+              }
+            />
+            {accountingOpen ? <ExpandLess /> : <ExpandMore />}
+          </ListItem>
+          <Collapse in={accountingOpen} timeout="auto" unmountOnExit>
+            <List
+              component="div"
+              disablePadding
+              sx={{
+                bgcolor: '#273447',
+                borderRadius: 1,
+                mx: 1,
+                mb: 1,
+                boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+              }}
+            >
+              {accountingSubMenu.map((item) => (
+                <ListItem
+                  button
+                  key={item.text}
+                  component={Link}
+                  to={item.path}
+                  selected={location.pathname === item.path}
+                  onClick={onClose}
+                  sx={{
+                    pl: 6,
+                    py: 1,
+                    bgcolor: location.pathname === item.path ? '#38475a' : 'inherit',
+                    fontWeight: location.pathname === item.path ? 700 : 400,
+                    color: '#fff',
+                    fontSize: 15,
+                    borderRadius: 1,
+                    '& .MuiListItemIcon-root': {
+                      color: '#fff',
+                      minWidth: 36,
+                    },
+                    '&:hover': {
+                      bgcolor: '#38475a',
+                    },
+                    transition: 'background 0.2s',
+                  }}
+                >
+                  <ListItemIcon>{item.icon}</ListItemIcon>
+                  <ListItemText
+                    primary={
+                      <Typography
+                        sx={{
+                          fontWeight: location.pathname === item.path ? 700 : 400,
+                          color: '#fff',
+                          fontSize: 15,
+                        }}
+                      >
+                        {item.text}
+                      </Typography>
+                    }
+                  />
+                </ListItem>
+              ))}
+            </List>
+          </Collapse>
+          <Divider sx={{ bgcolor: '#38475a', my: 1 }} />
+          {/* Other menu items */}
+          {menuItems.slice(7).map((item) => (
+            <ListItem
+              button
+              key={item.text}
+              component={Link}
+              to={item.path}
+              selected={location.pathname === item.path}
+              onClick={onClose}
+              sx={{
+                py: 1.2,
+                px: 3,
+                bgcolor: location.pathname === item.path ? '#38475a' : 'inherit',
+                fontWeight: location.pathname === item.path ? 700 : 500,
+                color: '#fff',
+                fontSize: 16,
+                borderRadius: 1,
+                '& .MuiListItemIcon-root': {
+                  color: '#fff',
+                  minWidth: 36,
+                },
+                '&:hover': {
+                  bgcolor: '#38475a',
+                },
+                transition: 'background 0.2s',
+              }}
+            >
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText
+                primary={
+                  <Typography
+                    sx={{
+                      fontWeight: location.pathname === item.path ? 700 : 500,
+                      color: '#fff',
+                      fontSize: 16,
+                    }}
+                  >
+                    {item.text}
+                  </Typography>
+                }
+              />
+            </ListItem>
+          ))}
+        </List>
+      </Box>
     </Drawer>
   );
 };

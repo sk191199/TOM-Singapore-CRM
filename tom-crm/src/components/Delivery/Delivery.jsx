@@ -10,12 +10,12 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  IconButton,
   Select,
   MenuItem,
   FormControl,
   InputLabel,
   Checkbox,
+  FormControlLabel,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
@@ -25,26 +25,26 @@ import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
 import InfoIcon from "@mui/icons-material/Info";
 import PersonIcon from "@mui/icons-material/Person";
 import ArticleIcon from "@mui/icons-material/Article";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 
-const staticOrders = [
+const staticDeliveries = [
   {
     docEntry: 1,
-    docNum: "SO00022025",
+    docNum: "DEL00022025",
     docDate: "2025-08-04",
     customerCode: "C001",
     customerName: "Tech Vision Pte Ltd",
   },
   {
     docEntry: 2,
-    docNum: "SO00052025",
+    docNum: "DEL00082025",
     docDate: "2025-08-05",
     customerCode: "C002",
     customerName: "Green Solutions LLP",
   },
   {
     docEntry: 3,
-    docNum: "SO00202025",
+    docNum: "DEL00142025",
     docDate: "2025-08-11",
     customerCode: "C002",
     customerName: "Green Solutions LLP",
@@ -52,7 +52,7 @@ const staticOrders = [
 ];
 
 const docTypes = ["Open", "Closed"];
-const orderTypes = ["Item", "Service"];
+const deliveryTypes = ["Item", "Service"];
 const customers = [
   { code: "C001", name: "Tech Vision Pte Ltd" },
   { code: "C002", name: "Green Solutions LLP" },
@@ -64,7 +64,7 @@ const uoms = ["Piece", "Box", "Kg"];
 const taxCodes = ["GST", "VAT"];
 const salesEmployees = ["Akshat Saxena", "John Doe"];
 
-const SalesOrder = () => {
+const Delivery = () => {
   const [showForm, setShowForm] = useState(false);
   const [itemRows, setItemRows] = useState([
     {
@@ -104,11 +104,16 @@ const SalesOrder = () => {
       {!showForm ? (
         <Paper sx={{ p: 3 }}>
           <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-            <ShoppingCartIcon sx={{ fontSize: 36, color: "#1976d2", mr: 1 }} />
+            <LocalShippingIcon sx={{ fontSize: 36, color: "#1976d2", mr: 1 }} />
             <Typography variant="h5" fontWeight={700}>
-              Sales Order Preparation List
+              Delivery Preparation List
             </Typography>
             <Box sx={{ flexGrow: 1 }} />
+            <FormControlLabel
+              control={<Checkbox />}
+              label="Select All"
+              sx={{ mr: 2 }}
+            />
             <Button
               variant="contained"
               color="error"
@@ -130,10 +135,7 @@ const SalesOrder = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>
-                  <Checkbox />
-                  All
-                </TableCell>
+                <TableCell></TableCell>
                 <TableCell>DocEntry</TableCell>
                 <TableCell>DocNum</TableCell>
                 <TableCell>DocDate</TableCell>
@@ -143,7 +145,7 @@ const SalesOrder = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {staticOrders.map((row, idx) => (
+              {staticDeliveries.map((row, idx) => (
                 <TableRow key={idx}>
                   <TableCell>
                     <Checkbox />
@@ -171,9 +173,9 @@ const SalesOrder = () => {
       ) : (
         <Paper sx={{ p: 3 }}>
           <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-            <ShoppingCartIcon sx={{ fontSize: 36, color: "#1976d2", mr: 1 }} />
+            <LocalShippingIcon sx={{ fontSize: 36, color: "#1976d2", mr: 1 }} />
             <Typography variant="h5" fontWeight={700}>
-              Sales Order Preparation
+              Delivery Preparation
             </Typography>
             <Box sx={{ flexGrow: 1 }} />
             <Button
@@ -196,7 +198,7 @@ const SalesOrder = () => {
               startIcon={<SwapHorizIcon />}
               sx={{ fontWeight: 600, mr: 1 }}
             >
-              Convert to Delivery
+              Convert to Invoice
             </Button>
             <Button
               variant="contained"
@@ -244,12 +246,12 @@ const SalesOrder = () => {
               />
             </Box>
           </Box>
-          {/* Order Details */}
+          {/* Delivery Details */}
           <Box sx={{ mb: 2 }}>
             <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
               <ArticleIcon sx={{ color: "#1976d2", mr: 1 }} />
               <Typography variant="h6" fontWeight={700}>
-                Order Details
+                Delivery Details
               </Typography>
             </Box>
             <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
@@ -264,7 +266,7 @@ const SalesOrder = () => {
               <TextField
                 label="Document Number"
                 size="small"
-                value="SO003122025"
+                value="DEL00162025"
                 sx={{ flex: "1 1 200px" }}
               />
               <TextField
@@ -286,9 +288,9 @@ const SalesOrder = () => {
                 </Select>
               </FormControl>
               <FormControl sx={{ flex: "1 1 200px" }} size="small">
-                <InputLabel>Order Type</InputLabel>
-                <Select label="Order Type" defaultValue="Item">
-                  {orderTypes.map((type) => (
+                <InputLabel>Delivery Type</InputLabel>
+                <Select label="Delivery Type" defaultValue="Item">
+                  {deliveryTypes.map((type) => (
                     <MenuItem key={type} value={type}>
                       {type}
                     </MenuItem>
@@ -545,4 +547,4 @@ const SalesOrder = () => {
   );
 };
 
-export default SalesOrder;
+export default Delivery;
