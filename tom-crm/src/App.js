@@ -18,6 +18,8 @@ import CostCenter from './components/CostCenter/CostCenter'
 import CustomerCreation from './components/CustomerCreation/CustomerCreation'
 import VendorCreation from './components/VendorCreation/VendorCreation'
 import ItemMasterData from './components/ItemMasterData/ItemMasterData'
+import SalesQuotation from './components/SalesQuotation/SalesQuotation'
+import SalesOrder from './components/SalesOrder/SalesOrder'
 
 const SIDEBAR_WIDTH = 230;
 
@@ -53,7 +55,8 @@ const AppLayout = ({ sidebarOpen, handleMenuClick, handleSidebarClose }) => (
         <Route path="/customer-vendor/customer-creation" element={<CustomerCreation/>} />
         <Route path="/customer-vendor/vendor-creation" element={<VendorCreation/>} />
         <Route path="/inventory/item-master-data" element={<ItemMasterData/>}/>
-        <Route path="/sales" element={<div>Sales Page</div>} />
+        <Route path="/sales/quotation" element={<SalesQuotation/>} />
+        <Route path="/sales/order" element={<SalesOrder/>} />
         <Route path="/purchase" element={<div>Purchase Page</div>} />
         <Route path="/accounting" element={<div>Accounting Page</div>} />
         <Route path="/" element={<div>Home Page</div>} />
