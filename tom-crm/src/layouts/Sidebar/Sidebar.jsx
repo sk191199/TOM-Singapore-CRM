@@ -30,7 +30,7 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 import ScaleIcon from "@mui/icons-material/Scale";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
 
-const SIDEBAR_WIDTH = 230;
+const SIDEBAR_WIDTH = 250;
 
 const adminSubMenu = [
   { text: 'User Master', icon: <PeopleIcon />, path: '/administration/user-master' },
@@ -176,9 +176,9 @@ const Sidebar = ({ open, onClose }) => {
           flex: 1,
           overflowY: 'auto',
           '&::-webkit-scrollbar': {
-            width: '8px',
+            width: '3px',
             background: '#232d3b',
-            borderRadius: '8px',
+            borderRadius: '3px',
           },
           '&::-webkit-scrollbar-thumb': {
             background: '#38475a',
