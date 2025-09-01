@@ -38,7 +38,6 @@ const AppLayout = ({ sidebarOpen, handleMenuClick, handleSidebarClose }) => (
         marginLeft: sidebarOpen ? SIDEBAR_WIDTH : 0,
         transition: 'margin-left 0.3s',
       }}
-      onClick={sidebarOpen ? handleSidebarClose : undefined}
     >
       <Routes>
         {/* <Route path="/administration" element={<div>Administration Page</div>} /> */}

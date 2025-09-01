@@ -30,11 +30,9 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 import ScaleIcon from "@mui/icons-material/Scale";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
 
-const SIDEBAR_WIDTH = 280;
+const SIDEBAR_WIDTH = 230;
 
-// Add your adminSubMenu here or import it if defined elsewhere
 const adminSubMenu = [
-  // Example:
   { text: 'User Master', icon: <PeopleIcon />, path: '/administration/user-master' },
   { text: 'Role Master', icon: <GroupsIcon />, path: '/administration/role-master' },
   { text: 'Document Numbering', icon: <DescriptionIcon />, path: '/administration/document-numbering' },
@@ -107,7 +105,7 @@ const menuItems = [
     text: 'Inventory',
     icon: <InventoryIcon />,
     path: '/inventory',
-    submenu: inventorySubMenu, // <-- Add this line
+    submenu: inventorySubMenu,
   },
   {
     text: 'Sales',
@@ -119,13 +117,13 @@ const menuItems = [
     text: 'Purchase',
     icon: <LockIcon />,
     path: '/purchase',
-    submenu: purchaseSubMenu, // <-- Add this line
+    submenu: purchaseSubMenu,
   },
   {
     text: 'Accounting',
     icon: <DescriptionIcon />,
     path: '/accounting',
-    submenu: accountingSubMenu, // <-- Add this line
+    submenu: accountingSubMenu,
   },
 ];
 
@@ -134,25 +132,25 @@ const Sidebar = ({ open, onClose }) => {
   const [adminOpen, setAdminOpen] = useState(false);
   const [masterOpen, setMasterOpen] = useState(false);
   const [customerVendorOpen, setCustomerVendorOpen] = useState(false);
-  const [inventoryOpen, setInventoryOpen] = useState(false); // <-- Add state for inventory
-  const [salesOpen, setSalesOpen] = useState(false); // Add state for Sales dropdown
-  const [purchaseOpen, setPurchaseOpen] = useState(false); // Add state for Purchase dropdown
-  const [accountingOpen, setAccountingOpen] = useState(false); // Add state for Accounting dropdown
+  const [inventoryOpen, setInventoryOpen] = useState(false);
+  const [salesOpen, setSalesOpen] = useState(false);
+  const [purchaseOpen, setPurchaseOpen] = useState(false);
+  const [accountingOpen, setAccountingOpen] = useState(false);
 
   const handleAdminClick = () => setAdminOpen((prev) => !prev);
   const handleMasterClick = () => setMasterOpen((prev) => !prev);
   const handleCustomerVendorClick = () => setCustomerVendorOpen((prev) => !prev);
-  const handleInventoryClick = () => setInventoryOpen((prev) => !prev); // <-- Add handler for inventory
-  const handleSalesClick = () => setSalesOpen((prev) => !prev); // Add handler for Sales dropdown
-  const handlePurchaseClick = () => setPurchaseOpen((prev) => !prev); // Add handler for Purchase dropdown
-  const handleAccountingClick = () => setAccountingOpen((prev) => !prev); // Add handler for Accounting dropdown
+  const handleInventoryClick = () => setInventoryOpen((prev) => !prev);
+  const handleSalesClick = () => setSalesOpen((prev) => !prev);
+  const handlePurchaseClick = () => setPurchaseOpen((prev) => !prev);
+  const handleAccountingClick = () => setAccountingOpen((prev) => !prev);
 
   return (
     <Drawer
       anchor="left"
       open={open}
       onClose={onClose}
-      variant="temporary"
+      variant="persistent"
       sx={{
         '& .MuiDrawer-paper': {
           width: SIDEBAR_WIDTH,
@@ -163,7 +161,6 @@ const Sidebar = ({ open, onClose }) => {
           height: '100vh',
           display: 'flex',
           flexDirection: 'column',
-          // Remove overflowY: 'scroll' here
         },
       }}
     >
@@ -178,7 +175,6 @@ const Sidebar = ({ open, onClose }) => {
         sx={{
           flex: 1,
           overflowY: 'auto',
-          // Custom scrollbar styles
           '&::-webkit-scrollbar': {
             width: '8px',
             background: '#232d3b',
@@ -218,7 +214,6 @@ const Sidebar = ({ open, onClose }) => {
                 bgcolor: '#38475a',
               },
               transition: 'background 0.2s',
-              
             }}
           >
             <ListItemIcon>{menuItems[0].icon}</ListItemIcon>
@@ -229,7 +224,6 @@ const Sidebar = ({ open, onClose }) => {
                     fontWeight: 700,
                     color: '#fff',
                     fontSize: 17,
-                    
                   }}
                 >
                   {menuItems[0].text}
@@ -257,7 +251,6 @@ const Sidebar = ({ open, onClose }) => {
                   component={Link}
                   to={item.path}
                   selected={location.pathname === item.path}
-                  onClick={onClose}
                   sx={{
                     pl: 6,
                     py: 1,
@@ -353,7 +346,6 @@ const Sidebar = ({ open, onClose }) => {
                   component={Link}
                   to={item.path}
                   selected={location.pathname === item.path}
-                  onClick={onClose}
                   sx={{
                     pl: 6,
                     py: 1,
@@ -449,7 +441,6 @@ const Sidebar = ({ open, onClose }) => {
                   component={Link}
                   to={item.path}
                   selected={location.pathname === item.path}
-                  onClick={onClose}
                   sx={{
                     pl: 6,
                     py: 1,
@@ -545,7 +536,6 @@ const Sidebar = ({ open, onClose }) => {
                   component={Link}
                   to={item.path}
                   selected={location.pathname === item.path}
-                  onClick={onClose}
                   sx={{
                     pl: 6,
                     py: 1,
@@ -641,7 +631,6 @@ const Sidebar = ({ open, onClose }) => {
                   component={Link}
                   to={item.path}
                   selected={location.pathname === item.path}
-                  onClick={onClose}
                   sx={{
                     pl: 6,
                     py: 1,
@@ -737,7 +726,6 @@ const Sidebar = ({ open, onClose }) => {
                   component={Link}
                   to={item.path}
                   selected={location.pathname === item.path}
-                  onClick={onClose}
                   sx={{
                     pl: 6,
                     py: 1,
@@ -833,7 +821,6 @@ const Sidebar = ({ open, onClose }) => {
                   component={Link}
                   to={item.path}
                   selected={location.pathname === item.path}
-                  onClick={onClose}
                   sx={{
                     pl: 6,
                     py: 1,
@@ -879,7 +866,6 @@ const Sidebar = ({ open, onClose }) => {
               component={Link}
               to={item.path}
               selected={location.pathname === item.path}
-              onClick={onClose}
               sx={{
                 py: 1.2,
                 px: 3,
