@@ -26,16 +26,17 @@ import PurchaseOrder from './components/PurchaseOrder/PurchaseOrder'
 import ApInvoice from './components/ApInvoice/ApInvoice'
 import JournalEntries from './components/JournalEntries/JournalEntries'
 
-const SIDEBAR_WIDTH = 230;
+const SIDEBAR_WIDTH = 200;
+const COLLAPSED_WIDTH = 60;
 
-const AppLayout = ({ sidebarOpen, handleMenuClick, handleSidebarClose }) => (
+const AppLayout = ({ collapsed, toggleSidebar }) => (
   <>
-    <Sidebar open={sidebarOpen} onClose={handleSidebarClose} />
-    <Navbar onMenuClick={handleMenuClick} sidebarOpen={sidebarOpen} />
+    <Sidebar open={true} collapsed={collapsed} />
+    <Navbar onMenuClick={toggleSidebar} collapsed={collapsed} />
     <div
       style={{
         marginTop: 64,
-        marginLeft: sidebarOpen ? SIDEBAR_WIDTH : 0,
+        marginLeft: collapsed ? COLLAPSED_WIDTH : SIDEBAR_WIDTH,
         transition: 'margin-left 0.3s',
       }}
     >
@@ -43,11 +44,11 @@ const AppLayout = ({ sidebarOpen, handleMenuClick, handleSidebarClose }) => (
         {/* <Route path="/administration" element={<div>Administration Page</div>} /> */}
         <Route path="/administration/user-master" element={<UserMaster/>} />
         <Route path="/administration/role-master" element={<RoleMaster/>} />
-        <Route path="/administration/document-numbering" element={<div>Document Numbering Page</div>} />
-        <Route path="/administration/alerts" element={<div>Alerts Page</div>} />
+        {/* <Route path="/administration/document-numbering" element={<div>Document Numbering Page</div>} /> */}
+        {/* <Route path="/administration/alerts" element={<div>Alerts Page</div>} /> */}
         <Route path="/administration/change-password" element={<ChangePassword/>} />
         <Route path="/administration/company-details" element={<CompanyDetails/>} />
-        <Route path="/master" element={<div>Master Page</div>} />
+        {/* <Route path="/master" element={<div>Master Page</div>} /> */}
         <Route path="/master/payment-term" element={<PaymentTermMaster/>} />
         <Route path="/master/currency" element={<CurrencyMaster/>} />
         <Route path="/master/uom" element={<UomMaster/>} />
@@ -55,7 +56,7 @@ const AppLayout = ({ sidebarOpen, handleMenuClick, handleSidebarClose }) => (
         <Route path="/master/subsidiary-company" element={<SubsidairyCompany/>} />
         <Route path="/master/project-master" element={<ProjectMaster/>} />
         <Route path="/master/cost-center" element={<CostCenter/>} />
-        <Route path="/crm" element={<div>CRM Page</div>} />
+        {/* <Route path="/crm" element={<div>CRM Page</div>} /> */}
         <Route path="/customer-vendor/customer-creation" element={<CustomerCreation/>} />
         <Route path="/customer-vendor/vendor-creation" element={<VendorCreation/>} />
         <Route path="/inventory/item-master-data" element={<ItemMasterData/>}/>
@@ -66,7 +67,7 @@ const AppLayout = ({ sidebarOpen, handleMenuClick, handleSidebarClose }) => (
         <Route path="/purchase/order" element={<PurchaseOrder/>} />
         <Route path="/purchase/ap-invoice" element={<ApInvoice/>} />
         <Route path="/accounting/journal-entries" element={<JournalEntries/>} />
-        <Route path="/" element={<div>Home Page</div>} />
+        {/* <Route path="/" element={<div>Home Page</div>} /> */}
       </Routes>
     </div>
   </>
@@ -74,6 +75,9 @@ const AppLayout = ({ sidebarOpen, handleMenuClick, handleSidebarClose }) => (
 
 const App = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+   const [collapsed, setCollapsed] = useState(false);
+
+   const toggleSidebar = () => setCollapsed((prev) => !prev);
 
   const handleMenuClick = () => setSidebarOpen(prev => !prev);
   const handleSidebarClose = () => setSidebarOpen(false);
@@ -84,13 +88,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route
           path="/*"
-          element={
-            <AppLayout
-              sidebarOpen={sidebarOpen}
-              handleMenuClick={handleMenuClick}
-              handleSidebarClose={handleSidebarClose}
-            />
-          }
+          element={<AppLayout collapsed={collapsed} toggleSidebar={toggleSidebar} />}
         />
       </Routes>
     </Router>
@@ -98,3 +96,61 @@ const App = () => {
 }
 
 export default App
+
+
+
+
+
+// import React, { useState } from "react";
+// import "./App.css";
+// import Sidebar from "./layouts/Sidebar/Sidebar";
+// import Navbar from "./layouts/Navbar/Navbar";
+// import Login from "./components/Login/Login";
+// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+// import UserMaster from "./components/UserMaster/UserMaster";
+// import RoleMaster from "./components/RoleMaster/RoleMaster";
+// // ... (your imports)
+
+// const SIDEBAR_WIDTH = 200;
+// const COLLAPSED_WIDTH = 60;
+
+// const AppLayout = ({ collapsed, toggleSidebar }) => (
+//   <>
+//     <Sidebar open={true} collapsed={collapsed} />
+//     <Navbar onMenuClick={toggleSidebar} collapsed={collapsed} />
+//     <div
+//       style={{
+//         marginTop: 64,
+//         marginLeft: collapsed ? COLLAPSED_WIDTH : SIDEBAR_WIDTH,
+//         transition: "margin-left 0.3s",
+//         padding: "16px",
+//       }}
+//     >
+//       <Routes>
+//         <Route path="/administration/user-master" element={<UserMaster />} />
+//         <Route path="/administration/role-master" element={<RoleMaster />} />
+//         {/* add other routes */}
+//       </Routes>
+//     </div>
+//   </>
+// );
+
+// const App = () => {
+//   const [collapsed, setCollapsed] = useState(false);
+
+//   const toggleSidebar = () => setCollapsed((prev) => !prev);
+
+//   return (
+//     <Router>
+//       <Routes>
+//         <Route path="/login" element={<Login />} />
+//         <Route
+//           path="/*"
+//           element={<AppLayout collapsed={collapsed} toggleSidebar={toggleSidebar} />}
+//         />
+//       </Routes>
+//     </Router>
+//   );
+// };
+
+// export default App;

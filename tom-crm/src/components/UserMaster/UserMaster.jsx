@@ -28,8 +28,8 @@ import FileDownloadIcon from "@mui/icons-material/FileDownload";
 const staticRows = [
   {
     userId: "Manager",
-    userName: "Akshat Geetanjali Saxena",
-    email: "akshat.saxena016@gmail.com",
+    userName: "Sasikumar",
+    email: "sasi@gmail.com",
     role: "Manager",
     companyDb: "TOM_ERP",
     active: true,
@@ -87,7 +87,7 @@ const roles = ["Manager", "Production", "Admin"];
 
 const UserMaster = () => {
   return (
-    <Box sx={{ p: 4, bgcolor: "#f7fafd", minHeight: "100vh" }}>
+    <Box sx={{ p: 2, bgcolor: "#f7fafd", minHeight: "100vh" }}>
       <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
         <PersonIcon sx={{ fontSize: 36, color: "#1976d2", mr: 1 }} />
         <Typography variant="h5" fontWeight={700}>
