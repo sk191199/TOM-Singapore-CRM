@@ -27,7 +27,7 @@ const Login = () => {
     // if (loginSuccess) {
     //   navigate('/administration/user-master');
     // }
-    navigate('/user-master');
+    navigate('/');
   };
 
   return (

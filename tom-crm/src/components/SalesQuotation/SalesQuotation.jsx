@@ -107,9 +107,9 @@ const SalesQuotation = () => {
       {!showForm ? (
         <Paper sx={{ p: 3 }}>
           <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-            <ArticleIcon sx={{ fontSize: 36, color: "#1976d2", mr: 1 }} />
-            <Typography variant="h5" fontWeight={700}>
-              Sales Quotation Preparation List
+            <ArticleIcon sx={{ fontSize: 26, color: "#1976d2", mr: 1 }} />
+            <Typography variant="h6" fontWeight={400}>
+              Sales Quotation Preparation
             </Typography>
             <Box sx={{ flexGrow: 1 }} />
             <Button
@@ -176,22 +176,22 @@ const SalesQuotation = () => {
       ) : (
         <Paper sx={{ p: 3 }}>
           <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-            <EditIcon sx={{ fontSize: 36, color: "#1976d2", mr: 1 }} />
-            <Typography variant="h5" fontWeight={700}>
+            <EditIcon sx={{ fontSize: 26, color: "#1976d2", mr: 1 }} />
+            <Typography variant="h5" fontWeight={400}>
               Sales Quotation Preparation
             </Typography>
             <Box sx={{ flexGrow: 1 }} />
             <Button
               variant="outlined"
               startIcon={<PrintIcon />}
-              sx={{ fontWeight: 600, mr: 1 }}
+              sx={{ fontWeight: 400, mr: 1 }}
             >
               Print
             </Button>
             <Button
               variant="outlined"
               startIcon={<CancelIcon />}
-              sx={{ fontWeight: 600, mr: 1 }}
+              sx={{ fontWeight: 400, mr: 1 }}
               onClick={() => setShowForm(false)}
             >
               Cancel
@@ -199,21 +199,21 @@ const SalesQuotation = () => {
             <Button
               variant="outlined"
               startIcon={<SaveIcon />}
-              sx={{ fontWeight: 600, mr: 1 }}
+              sx={{ fontWeight: 400, mr: 1 }}
             >
               Save Draft
             </Button>
             <Button
               variant="outlined"
               startIcon={<SwapHorizIcon />}
-              sx={{ fontWeight: 600, mr: 1 }}
+              sx={{ fontWeight: 400, mr: 1 }}
             >
               Convert to Order
             </Button>
             <Button
               variant="contained"
               color="error"
-              sx={{ bgcolor: "#f44336", fontWeight: 600 }}
+              sx={{ bgcolor: "#f44336", fontWeight: 400 }}
             >
               Submit
             </Button>
@@ -222,7 +222,7 @@ const SalesQuotation = () => {
           <Box sx={{ mb: 2 }}>
             <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
               <DescriptionIcon sx={{ color: "#1976d2", mr: 1 }} />
-              <Typography variant="h6" fontWeight={700}>
+              <Typography variant="h6" fontWeight={400}>
                 Document Information
               </Typography>
             </Box>
@@ -230,7 +230,7 @@ const SalesQuotation = () => {
               <TextField
                 label="Document Number"
                 size="small"
-                value="SQ03222025"
+                value=""
                 sx={{ flex: "1 1 250px" }}
               />
               <FormControl sx={{ flex: "1 1 250px" }} size="small">
@@ -265,7 +265,7 @@ const SalesQuotation = () => {
           <Box sx={{ mb: 2 }}>
             <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
               <PersonIcon sx={{ color: "#1976d2", mr: 1 }} />
-              <Typography variant="h6" fontWeight={700}>
+              <Typography variant="h6" fontWeight={400}>
                 Customer Information
               </Typography>
             </Box>
@@ -303,7 +303,7 @@ const SalesQuotation = () => {
           <Box sx={{ mb: 2 }}>
             <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
               <DescriptionIcon sx={{ color: "#1976d2", mr: 1 }} />
-              <Typography variant="h6" fontWeight={700}>
+              <Typography variant="h6" fontWeight={400}>
                 Quotation Details
               </Typography>
             </Box>
@@ -356,7 +356,7 @@ const SalesQuotation = () => {
           <Box sx={{ mb: 2 }}>
             <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
               <InfoIcon sx={{ color: "#1976d2", mr: 1 }} />
-              <Typography variant="h6" fontWeight={700}>
+              <Typography variant="h6" fontWeight={400}>
                 Item Details
               </Typography>
             </Box>
@@ -446,7 +446,7 @@ const SalesQuotation = () => {
               variant="contained"
               color="primary"
               startIcon={<AddIcon />}
-              sx={{ mt: 2, fontWeight: 600 }}
+              sx={{ mt: 2, fontWeight: 400 }}
               onClick={handleAddRow}
             >
               Add Row
@@ -503,25 +503,25 @@ const SalesQuotation = () => {
           <Box sx={{ display: "flex", gap: 4, mb: 2 }}>
             <Box>
               <Typography variant="subtitle2">Subtotal</Typography>
-              <Typography variant="h6" fontWeight={700}>
+              <Typography variant="h6" fontWeight={400}>
                 $0.00
               </Typography>
             </Box>
             <Box>
               <Typography variant="subtitle2">Tax (9%)</Typography>
-              <Typography variant="h6" fontWeight={700}>
+              <Typography variant="h6" fontWeight={400}>
                 $0.00
               </Typography>
             </Box>
             <Box>
               <Typography variant="subtitle2">Discount</Typography>
-              <Typography variant="h6" fontWeight={700}>
+              <Typography variant="h6" fontWeight={400}>
                 0.00
               </Typography>
             </Box>
             <Box>
               <Typography variant="subtitle2">Total Amount</Typography>
-              <Typography variant="h6" fontWeight={700} color="error">
+              <Typography variant="h6" fontWeight={400} color="error">
                 0.00
               </Typography>
             </Box>
@@ -530,7 +530,7 @@ const SalesQuotation = () => {
           <Box sx={{ mt: 2 }}>
             <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
               <DescriptionIcon sx={{ color: "#1976d2", mr: 1 }} />
-              <Typography variant="h6" fontWeight={700}>
+              <Typography variant="h6" fontWeight={400}>
                 Terms & Conditions
               </Typography>
             </Box>

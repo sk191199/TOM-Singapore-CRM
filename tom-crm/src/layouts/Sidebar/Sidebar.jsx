@@ -444,7 +444,7 @@ import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 
 // Widths
 const SIDEBAR_WIDTH = 200;
-const COLLAPSED_WIDTH = 60;
+const COLLAPSED_WIDTH = 80;
 
 /* ---------------- SUBMENUS ---------------- */
 const adminSubMenu = [
@@ -670,7 +670,7 @@ const Sidebar = ({ open, onClose, collapsed }) => {
           src="https://www.tom.sg/wp-content/uploads/2021/11/tom_logo-300x135.png"
           alt="logo"
           style={{
-            maxWidth: collapsed ? "40px" : "120px", // smaller logo when collapsed
+            maxWidth: collapsed ? "50px" : "120px", // smaller logo when collapsed
             transition: "max-width 0.3s",
           }}
         />

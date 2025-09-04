@@ -25,9 +25,10 @@ import ArInvoice from './components/ArInvoice/ArInvoice'
 import PurchaseOrder from './components/PurchaseOrder/PurchaseOrder'
 import ApInvoice from './components/ApInvoice/ApInvoice'
 import JournalEntries from './components/JournalEntries/JournalEntries'
+import Dashboard from './components/Dashboard/Dashboard'
 
 const SIDEBAR_WIDTH = 200;
-const COLLAPSED_WIDTH = 60;
+const COLLAPSED_WIDTH = 80;
 
 const AppLayout = ({ collapsed, toggleSidebar }) => (
   <>
@@ -67,7 +68,7 @@ const AppLayout = ({ collapsed, toggleSidebar }) => (
         <Route path="/purchase/order" element={<PurchaseOrder/>} />
         <Route path="/purchase/ap-invoice" element={<ApInvoice/>} />
         <Route path="/accounting/journal-entries" element={<JournalEntries/>} />
-        {/* <Route path="/" element={<div>Home Page</div>} /> */}
+        <Route path="/" element={<Dashboard/>} />
       </Routes>
     </div>
   </>

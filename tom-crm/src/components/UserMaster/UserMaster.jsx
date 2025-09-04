@@ -88,64 +88,12 @@ const roles = ["Manager", "Production", "Admin"];
 const UserMaster = () => {
   return (
     <Box sx={{ p: 2, bgcolor: "#f7fafd", minHeight: "100vh" }}>
-      <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-        <PersonIcon sx={{ fontSize: 36, color: "#1976d2", mr: 1 }} />
-        <Typography variant="h5" fontWeight={700}>
-          User Creation
-        </Typography>
-      </Box>
-      <Paper sx={{ p: 3, mb: 3 }}>
-        <Box
-          sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: 2,
-            mb: 2,
-          }}
-        >
-          <TextField
-            label="User ID *"
-            size="small"
-            sx={{ flex: "1 1 200px" }}
-          />
-          <TextField
-            label="Password *"
-            size="small"
-            sx={{ flex: "1 1 200px" }}
-          />
-          <TextField
-            label="User Name"
-            size="small"
-            sx={{ flex: "1 1 200px" }}
-          />
-          <TextField
-            label="Email ID"
-            size="small"
-            sx={{ flex: "1 1 200px" }}
-          />
-          <FormControl sx={{ flex: "1 1 200px" }} size="small">
-            <InputLabel>Role *</InputLabel>
-            <Select label="Role *" defaultValue="">
-              <MenuItem value="">--Select Role--</MenuItem>
-              {roles.map((role) => (
-                <MenuItem key={role} value={role}>
-                  {role}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl sx={{ flex: "1 1 200px" }} size="small">
-            <InputLabel>Company DB *</InputLabel>
-            <Select label="Company DB *" defaultValue="TOM_ERP">
-              <MenuItem value="TOM_ERP">TOM_ERP</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
-        <Box sx={{ display: "flex", gap: 3, mb: 2 }}>
-          <FormControlLabel control={<Checkbox />} label="Read" />
-          <FormControlLabel control={<Checkbox />} label="Edit" />
-          <FormControlLabel control={<Checkbox />} label="Delete" />
-          <FormControlLabel control={<Checkbox />} label="Active" />
+      <Box sx={{ display: "flex", alignItems: "center", mb: 2, justifyContent: "space-between" }}>
+        <Box sx={{display:"flex", alignItems:"center"}}>
+          <PersonIcon sx={{ fontSize: 36, color: "#1976d2", mr: 0.4 }} />
+          <Typography variant="h5" fontWeight={700}>
+            User Creation
+          </Typography>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
           <Button
@@ -179,6 +127,57 @@ const UserMaster = () => {
             Save
           </Button>
         </Box>
+      </Box>
+      <Paper sx={{ p: 3, mb: 3 }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 2,
+            mb: 2,
+          }}
+        >
+          <TextField
+            label="User ID *"
+            size="small"
+            sx={{ flex: "1 1 200px" }}
+          />
+          <TextField
+            label="Password *"
+            size="small"
+            sx={{ flex: "1 1 200px" }}
+          />
+          <TextField
+            label="User Name"
+            size="small"
+            sx={{ flex: "1 1 200px" }}
+          />
+          <TextField label="Email ID" size="small" sx={{ flex: "1 1 200px" }} />
+          <FormControl sx={{ flex: "1 1 200px" }} size="small">
+            <InputLabel>Role *</InputLabel>
+            <Select label="Role *" defaultValue="">
+              <MenuItem value="">--Select Role--</MenuItem>
+              {roles.map((role) => (
+                <MenuItem key={role} value={role}>
+                  {role}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl sx={{ flex: "1 1 200px" }} size="small">
+            <InputLabel>Company DB *</InputLabel>
+            <Select label="Company DB *" defaultValue="TOM_ERP">
+              <MenuItem value="TOM_ERP">TOM_ERP</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+        <Box sx={{ display: "flex", gap: 3, mb: 2 }}>
+          <FormControlLabel control={<Checkbox />} label="Read" />
+          <FormControlLabel control={<Checkbox />} label="Edit" />
+          <FormControlLabel control={<Checkbox />} label="Delete" />
+          <FormControlLabel control={<Checkbox />} label="Active" />
+        </Box>
+        
       </Paper>
       <Paper>
         <Table>
